@@ -1,5 +1,7 @@
 import { TagID } from "../types/tags";
 
+import { languages, Language } from "./translations";
+
 interface PostData {
   objectID: string;
   frontmatter: {
@@ -18,9 +20,10 @@ interface QueryData {
   };
 }
 
-const postQuery = `{
+const postQuery = (lang: Language) => `{
   posts: allMdx(
     filter: {
+      frontmatter: { lang: { eq: "${lang}" } }
       fileAbsolutePath: { regex: "//contents/blog//" }
     }) {
     edges {
@@ -46,13 +49,12 @@ const flatten = (arr: Array<{ node: PostData }>) =>
   }));
 
 const settings = { attributesToSnippet: [`excerpt:20`] };
-const queries = [
-  {
-    query: postQuery,
-    transformer: ({ data }: { data: QueryData }) => flatten(data.posts.edges),
-    indexName: `LesleyBlogPosts`,
-    settings
-  }
-];
+
+const queries = languages.map(lang => ({
+  query: postQuery(lang),
+  transformer: ({ data }: { data: QueryData }) => flatten(data.posts.edges),
+  indexName: `LesleyBlogPosts${lang}`,
+  settings
+}));
 
 export default queries;

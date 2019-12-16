@@ -17,8 +17,8 @@ const Logo = ({ lang }: { lang: Language }) => (
   </Link>
 );
 
-const searchIndices = [
-  { name: "LesleyBlogPosts", title: "Blog Posts", hitComp: "PostHit" }
+const searchIndices = (lang: Language) => [
+  { name: `LesleyBlogPosts${lang}`, title: "Blog Posts", hitComp: "PostHit" }
 ];
 
 interface MenuItemProp extends React.HTMLProps<HTMLDivElement> {
@@ -162,7 +162,7 @@ export default class Header extends React.Component<HeaderProps, HeaderStates> {
               </ul>
             )}
           </nav>
-          <Search collapse indices={searchIndices} />
+          <Search collapse indices={searchIndices(lang)} />
         </div>
       </header>
     );

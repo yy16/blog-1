@@ -3,7 +3,7 @@ import { graphql } from "gatsby";
 import Link from "gatsby-link";
 import styled from "styled-components";
 
-import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/lib/fa";
+import { FaAngleDoubleLeft, FaAngleDoubleRight } from "react-icons/fa";
 
 import { Language, translations } from "../../utils/translations";
 
